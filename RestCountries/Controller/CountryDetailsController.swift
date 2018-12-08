@@ -8,59 +8,65 @@
 
 import UIKit
 
-class CountryDetailsController : UITableViewController {
+class CountryDetailsController : MainTableViewController {
     
-    let cellXibName = "CountryCell"
-    let cellId = "cellId"
+    private let cellXibName = "CountryDetailsCell"
+    private let headerXibName = "CustomHeaderTableView"
+    private let cellId = "cellDetailLabelId"
     
-    let tableInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+    private lazy var countryFlagView: UIImageView = UIImageView.init()
     
-    var countryDetails: CountryDetailsViewModel! {
+    fileprivate let flagSize: CGFloat = 128.0
+    
+    public var countryDetails: CountryViewModel! {
         didSet {
+            navigationItem.title = countryDetails.name
             
+            countryFlagView.kf.setImage(with: URL(string: countryDetails.flagImageUrl))
+            
+            self.tableView?.reloadData()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupNavBar()
-        setupTableView()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return countryDetails.details.count
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return flagSize
+    }
+
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerXibName) as! CustomHeaderTableView
+        
+        headerView.setHeader(imageView: countryFlagView)
+        return headerView
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CountryCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CountryDetailsCell
 
-//        cell.countryDetailsViewModel = countryDetails
+        cell.countryDetailsViewModel = countryDetails.details[indexPath.row]
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        self.navigationController?.pushViewController(UIViewController, animated: <#T##Bool#>)
-    }
-    
-    fileprivate func setupTableView() {
-        tableView.register(UINib(nibName: cellXibName, bundle: nil), forCellReuseIdentifier: cellId)
-        tableView.separatorInset = tableInsets
-        tableView.separatorColor = .tableViewSeparatorColor
-        tableView.backgroundColor = .tableViewBgColor
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 90
-        tableView.tableFooterView = UIView()
-    }
-    
-    fileprivate func setupNavBar() {
-        navigationItem.title = "country.details.label".localized
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.backgroundColor = .yellow
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = UIColor.colorNavigationBarTintColor
+    override func setupTableView() {
+        super.setupTableView()
         
-        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.colorTextTopNavigation]
+        tableView.register(UINib(nibName: cellXibName, bundle: nil), forCellReuseIdentifier: cellId)
+        
+        tableView.register(UINib(nibName: headerXibName, bundle: Bundle.main), forHeaderFooterViewReuseIdentifier: headerXibName)
+
+    }
+    
+    override func setupNavBar() {
+        super.setupNavBar()
+        navigationItem.title = "country.details.label".localized
     }
     
 }

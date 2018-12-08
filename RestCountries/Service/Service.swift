@@ -9,9 +9,9 @@
 import Foundation
 
 class Service: NSObject {
-    static let shared = Service()
+    public static let shared = Service()
     
-    func fetchAllCountries(completion: @escaping ([Country]?, Error?) -> ()) {
+    public func fetchAllCountries(completion: @escaping ([Country]?, Error?) -> ()) {
         let urlString = Common.getAll
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { (data, resp, err) in
@@ -35,7 +35,7 @@ class Service: NSObject {
             }.resume()
     }
     
-    func searchCountryBy(name: String, completion: @escaping([Country]?, Error?) -> ()) {
+    public func searchCountryBy(name: String, completion: @escaping([Country]?, Error?) -> ()) {
         let urlString = String(format: Common.searchCountryByName, name)
         guard let url = URL(string: urlString) else { return }
         

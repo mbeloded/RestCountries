@@ -7,4 +7,6 @@
 */
 
 "countries.label" = "Countries";
-"search.place" = " Search...";
+"search.placeholder" = " Search...";
+"population.label" = "population:";
+"country.details.label" = "Country details";

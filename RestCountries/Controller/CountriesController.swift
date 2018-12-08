@@ -8,19 +8,21 @@
 
 import UIKit
 
-class CountriesController: UITableViewController {
+class CountriesController: MainTableViewController {
     
-    var countriesViewModels = [CountryViewModel]()
-    var filteredCountriesViewModels = [CountryViewModel]()
+    private let countryDetailsVC = CountryDetailsController()
     
-    let cellXibName = "CountryCell"
-    let cellId = "cellId"
+    private var countriesViewModels = [CountryViewModel]()
+    private var filteredCountriesViewModels = [CountryViewModel]()
     
-    let tableInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+    private let cellXibName = "CountryCell"
+    private let cellId = "cellId"
 
-    let searchBar: UISearchBar = UISearchBar()
+    private let searchBar: UISearchBar = UISearchBar()
     
-    var isSearch: Bool = false
+    private let searchController = UISearchController(searchResultsController: nil)
+    
+    private var isSearch: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,44 +68,51 @@ class CountriesController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CountryCell
-        let countryViewModel = isSearch ? filteredCountriesViewModels[indexPath.row] : countriesViewModels[indexPath.row]
-        cell.countryViewModel = countryViewModel
+        
+        let index = indexPath.row
+        
+        if index < (isSearch ? filteredCountriesViewModels.count : countriesViewModels.count) {
+            let countryViewModel = isSearch ? filteredCountriesViewModels[index] : countriesViewModels[index]
+            cell.countryViewModel = countryViewModel
+        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.navigationController?.pushViewController(UIViewController, animated: <#T##Bool#>)
-    }
-    
-    fileprivate func setupTableView() {
-        tableView.register(UINib(nibName: cellXibName, bundle: nil), forCellReuseIdentifier: cellId)
-        tableView.separatorInset = tableInsets
-        tableView.separatorColor = .tableViewSeparatorColor
-        tableView.backgroundColor = .tableViewBgColor
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 90
-        tableView.tableFooterView = UIView()
-    }
-    
-    fileprivate func setupNavBar() {
-        navigationItem.title = "countries.label".localized
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.backgroundColor = .yellow
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = UIColor.colorNavigationBarTintColor
+
+        let countryViewModel = isSearch ? filteredCountriesViewModels[indexPath.row] : countriesViewModels[indexPath.row]
         
-        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.colorTextTopNavigation]
+        countryDetailsVC.countryDetails = countryViewModel
+        self.navigationController?.pushViewController(countryDetailsVC, animated: true)
+        
+    }
+    
+    override func setupTableView() {
+        super.setupTableView()
+        
+        tableView.register(UINib(nibName: cellXibName, bundle: nil), forCellReuseIdentifier: cellId)
+        
+    }
+    
+    override func setupNavBar() {
+        super.setupNavBar()
+        
+        navigationItem.title = "countries.label".localized
+        
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.hidesSearchBarWhenScrolling = true
     }
     
     fileprivate func setupSearchBar() {
-        searchBar.searchBarStyle = UISearchBar.Style.prominent
-        searchBar.placeholder = "search.place".localized
-        searchBar.sizeToFit()
-        searchBar.isTranslucent = false
-        searchBar.backgroundImage = UIImage()
-        searchBar.delegate = self
         
-        navigationItem.titleView = searchBar
+        searchController.searchBar.delegate = self
+        searchController.searchBar.searchBarStyle = UISearchBar.Style.prominent
+        searchController.searchBar.isTranslucent = false
+        searchController.searchBar.placeholder = "search.placeholder".localized
+        searchController.searchBar.backgroundImage = UIImage()
+
+        navigationItem.searchController = searchController
+        
     }
 
 }
@@ -116,7 +125,7 @@ extension CountriesController: UISearchBarDelegate {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        isSearch = false;
+        isSearch = true;
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -126,7 +135,7 @@ extension CountriesController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        isSearch = false;
+        isSearch = true;
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

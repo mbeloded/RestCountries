@@ -11,9 +11,16 @@ import Foundation
 struct Country: Decodable {
     
     let name: String
+    let alpha2Code: String
     let alpha3Code: String
     let capital: String
+    let region: String
+    let subregion: String
     let population: Int32
+    let latlng: [Double]
+    let demonym: String
+    let area: Float?
+    let borders: [String]
     let nativeName: String
     let currencies: [Currency]
     let languages: [Language]

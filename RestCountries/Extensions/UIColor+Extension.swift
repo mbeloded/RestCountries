@@ -23,7 +23,7 @@ extension UIColor {
     
     // Naviagtion
     static let colorNavigationBackground = UIColor(r: 6, g: 72, b: 72)
-    static let colorNavigationBarTintColor = UIColor(r: 50, g: 199, b: 242)
+    static let colorNavigationBarTintColor = UIColor.white
     
     // Text colors
     static let colorTextError = UIColor(netHex: 0xdc0c0b)
@@ -31,6 +31,6 @@ extension UIColor {
     static let colorTextTopNavigation = UIColor(netHex: 0x00151A)
     
     // Table view bg
-    static let tableViewBgColor = UIColor(r: 12, g: 47, b: 57)
+    static let tableViewBgColor = UIColor.white
     static let tableViewSeparatorColor = UIColor(r: 7, g: 71, b: 89)
 }

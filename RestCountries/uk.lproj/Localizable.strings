@@ -7,4 +7,6 @@
 */
 
 "countries.label" = "Країни";
-"search.place" = " Пошук...";
+"search.placeholder" = " Пошук...";
+"population.label" = "населення:";
+"country.details.label" = "Інформація про країну";
