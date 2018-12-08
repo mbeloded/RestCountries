@@ -35,7 +35,7 @@ class CountriesController: MainTableViewController {
     
     // fetch list of all countries
     fileprivate func fetchData() {
-        Service.shared.fetchAllCountries { (countries, err) in
+        CountriesService.shared.fetchAllCountries { (countries, err) in
             if let err = err {
                 print("Failed to fetch countries:", err)
                 return
@@ -50,7 +50,7 @@ class CountriesController: MainTableViewController {
     @objc fileprivate func searchOnServerBy(name: String) {
         weak var weakSelf = self
         
-        Service.shared.searchCountryBy(name: name, completion: { (countries, err) in
+        CountriesService.shared.searchCountryBy(name: name, completion: { (countries, err) in
             
             if let err = err {
                 print("Failed to fetch countries:", err)

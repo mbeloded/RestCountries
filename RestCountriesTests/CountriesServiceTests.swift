@@ -7,8 +7,9 @@
 //
 
 import XCTest
+@testable import RestCountries
 
-class ServiceTests: XCTestCase {
+class CountriesServiceTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -18,13 +19,16 @@ class ServiceTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testCancelRequest() {
         
-        let attributes: String = ""
-        
-//        let service: Service = Service.shared.searchCountryBy(attributes)
+        // giving a "previous" session
+        CountriesService.shared.fetchAllCountries { _, _ in
+            // ignore call
+        }
+
+        // Expected to task nil after cancel
+        CountriesService.shared.cancelFetchCurrencies()
+        XCTAssertNil(CountriesService.shared.task, "Expected task nil")
     }
 
     func testPerformanceExample() {

@@ -14,6 +14,7 @@ public class Common : NSObject
         static let API_URL = "https://restcountries.eu/rest/v2"
         static let API_ALL = "/all"
         static let API_SEARCH_BY_NAME = "/name/%@"
+        static let COUNTRY_ICONS_API_URL = "https://www.countryflags.io/%@/flat/64.png"
     }
     
     static var getAll: String {
@@ -22,5 +23,9 @@ public class Common : NSObject
     
     static var searchCountryByName: String {
         return Common.Global.API_URL + Common.Global.API_SEARCH_BY_NAME
+    }
+    
+    static var getCountryFlagInPng: String {
+        return Common.Global.COUNTRY_ICONS_API_URL
     }
 }

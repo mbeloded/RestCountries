@@ -8,13 +8,17 @@
 
 import Foundation
 
-class Service: NSObject {
-    public static let shared = Service()
+final class CountriesService {
     
-    public func fetchAllCountries(completion: @escaping ([Country]?, Error?) -> ()) {
-        let urlString = Common.getAll
-        guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
+    public static let shared = CountriesService()
+    
+    var task : URLSessionTask?
+    
+    public func fetchAllCountries(_ completion: @escaping ([Country]?, Error?) -> Void) {
+        
+        guard let url = URL(string: Common.getAll) else { return }
+        
+        task = URLSession.shared.dataTask(with: url) { (data, resp, err) in
             if let err = err {
                 completion(nil, err)
                 print("Failed to fetch courses:", err)
@@ -32,14 +36,18 @@ class Service: NSObject {
             } catch let jsonErr {
                 print("Failed to decode:", jsonErr)
             }
-            }.resume()
+        }
+            
+        task?.resume()
     }
     
     public func searchCountryBy(name: String, completion: @escaping([Country]?, Error?) -> ()) {
+        
         let urlString = String(format: Common.searchCountryByName, name)
+        
         guard let url = URL(string: urlString) else { return }
         
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
+        task = URLSession.shared.dataTask(with: url) { (data, resp, err) in
             if let err = err {
                 completion(nil, err)
                 print("Failed to fetch courses:", err)
@@ -56,6 +64,16 @@ class Service: NSObject {
             } catch let jsonErr {
                 print("Failed to decode:", jsonErr)
             }
-            }.resume()
+        }
+            
+        task?.resume()
+    }
+    
+    public func cancelFetchCurrencies() {
+        
+        if let task = task {
+            task.cancel()
+        }
+        task = nil
     }
 }
