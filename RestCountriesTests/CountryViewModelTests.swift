@@ -19,7 +19,7 @@ class CountryViewModelTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
+    func testCountryModel() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         
@@ -27,10 +27,15 @@ class CountryViewModelTests: XCTestCase {
         
         let countryViewModel = CountryViewModel.init(country: country)
         
+        let url = URL(string: countryViewModel.flagImageUrl)
+        
         // expected details
         XCTAssertTrue(countryViewModel.details.count > 0, "Expected at least one item indetails about the country")
         
-        XCTAssertNotNil(URL(string: countryViewModel.flagImageUrl), "Expected valid flag URL of the country")
+        XCTAssertNotNil(url, "Expected valid flag URL of the country")
+        
+        let data = try? Data(contentsOf: url!)
+        XCTAssertNotNil(data, "Expected flag data of the country")
         
     }
 
