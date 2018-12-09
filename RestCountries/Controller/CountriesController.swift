@@ -35,14 +35,22 @@ class CountriesController: MainTableViewController {
     
     // fetch list of all countries
     fileprivate func fetchData() {
-        CountriesService.shared.fetchAllCountries { (countries, err) in
-            if let err = err {
-                print("Failed to fetch countries:", err)
-                return
-            }
+        
+        weak var weakSelf = self
+        
+        CountriesService.shared.fetchAllCountries { result in
             
-            self.countriesViewModels = countries?.map({return CountryViewModel(country: $0)}) ?? []
-            self.tableView.reloadData()
+            switch result {
+            case .success(let countries) :
+                // reload data
+                weakSelf?.countriesViewModels = countries.map({return CountryViewModel(country: $0)})
+                weakSelf?.tableView.reloadData()
+                break
+            case .failure(let error) :
+                print("Result error \(error)")//show the error
+                break
+            }
+
         }
     }
     
@@ -50,14 +58,17 @@ class CountriesController: MainTableViewController {
     @objc fileprivate func searchOnServerBy(name: String) {
         weak var weakSelf = self
         
-        CountriesService.shared.searchCountryBy(name: name, completion: { (countries, err) in
+        CountriesService.shared.searchCountryBy(name: name, completion: { result in
             
-            if let err = err {
-                print("Failed to fetch countries:", err)
-                return
+            switch result {
+            case .success(let countries) :
+                // reload data
+                weakSelf?.filteredCountriesViewModels = countries.map({return CountryViewModel(country: $0)})
+                break
+            case .failure(let error) :
+                print("Result error \(error)")//show the error
+                break
             }
-            
-            weakSelf?.filteredCountriesViewModels = countries?.map({return CountryViewModel(country: $0)}) ?? []
             
         })
     }
@@ -100,7 +111,7 @@ class CountriesController: MainTableViewController {
         navigationItem.title = "countries.label".localized
         
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.hidesSearchBarWhenScrolling = true
+//        navigationItem.hidesSearchBarWhenScrolling = true
     }
     
     fileprivate func setupSearchBar() {
@@ -124,13 +135,13 @@ extension CountriesController: UISearchBarDelegate {
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
         isSearch = true;
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        isSearch = false;
+        isSearch = false
+        self.tableView.reloadData()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

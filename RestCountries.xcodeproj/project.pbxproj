@@ -33,6 +33,8 @@
 		46E2757A21BBEE6300BB3805 /* CustomHeaderTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46E2757921BBEE6300BB3805 /* CustomHeaderTableView.xib */; };
 		46E2757C21BC0FB900BB3805 /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E2757B21BC0FB900BB3805 /* MainTableViewController.swift */; };
 		46E2757E21BC69CB00BB3805 /* CountryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E2757D21BC69CB00BB3805 /* CountryViewModelTests.swift */; };
+		46E2758021BCF74100BB3805 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E2757F21BCF74100BB3805 /* Result.swift */; };
+		46E2758221BCF76600BB3805 /* ErrorResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E2758121BCF76600BB3805 /* ErrorResult.swift */; };
 		46E5970521B4703A008A3AB8 /* CountryDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E5970421B4703A008A3AB8 /* CountryDetailsCell.swift */; };
 		46E5970721B47052008A3AB8 /* CountryDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46E5970621B47052008A3AB8 /* CountryDetailsCell.xib */; };
 		9072D1147228AF3CC06F8D33 /* Pods_RestCountries.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB12F5C3B56A8E23E3B7FAA3 /* Pods_RestCountries.framework */; };
@@ -91,6 +93,8 @@
 		46E2757921BBEE6300BB3805 /* CustomHeaderTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomHeaderTableView.xib; sourceTree = "<group>"; };
 		46E2757B21BC0FB900BB3805 /* MainTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
 		46E2757D21BC69CB00BB3805 /* CountryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryViewModelTests.swift; sourceTree = "<group>"; };
+		46E2757F21BCF74100BB3805 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		46E2758121BCF76600BB3805 /* ErrorResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResult.swift; sourceTree = "<group>"; };
 		46E5970421B4703A008A3AB8 /* CountryDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDetailsCell.swift; sourceTree = "<group>"; };
 		46E5970621B47052008A3AB8 /* CountryDetailsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryDetailsCell.xib; sourceTree = "<group>"; };
 		CFF3551360DA8DE749027BE7 /* Pods-RestCountries.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RestCountries.release.xcconfig"; path = "Pods/Target Support Files/Pods-RestCountries/Pods-RestCountries.release.xcconfig"; sourceTree = "<group>"; };
@@ -250,6 +254,8 @@
 			isa = PBXGroup;
 			children = (
 				46A6184E21B320BA0081B510 /* CountriesService.swift */,
+				46E2757F21BCF74100BB3805 /* Result.swift */,
+				46E2758121BCF76600BB3805 /* ErrorResult.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -442,8 +448,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46E2758021BCF74100BB3805 /* Result.swift in Sources */,
 				46A6184A21B31AAD0081B510 /* CountryCell.swift in Sources */,
 				46A6184521B3103D0081B510 /* Currency.swift in Sources */,
+				46E2758221BCF76600BB3805 /* ErrorResult.swift in Sources */,
 				46A6183D21B304570081B510 /* MainNavigationController.swift in Sources */,
 				46E2757C21BC0FB900BB3805 /* MainTableViewController.swift in Sources */,
 				46A6186721B333710081B510 /* CountryDetailsController.swift in Sources */,
