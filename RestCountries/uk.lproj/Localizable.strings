@@ -10,7 +10,7 @@
 "search.placeholder" = " Пошук...";
 "population.label" = "населення:";
 "country.details.label" = "Інформація про країну";
-"error.wrong.url.label" = "Wrong url format";
-"error.failed.to.decode.data.label" = "Failed to decode data with countries";
-"error.failed.to.decode.json.label" = "Failed to decode json with countries: %@";
-"error.failed.to.fetch.label" = "Failed to fetch countries: %@";
+"error.wrong.url.label" = "Неправильний url";
+"error.failed.to.decode.data.label" = "Неможливо декодувати дані про країни";
+"error.failed.to.decode.json.label" = "Неможливо декодувати json про країни: %@";
+"error.failed.to.fetch.label" = "Неможливо отримати дані про країни: %@";
